@@ -1090,6 +1090,20 @@ class Function(cntk_py.Function):
         return cntk_py.Function.load_model(filename, device)
 
 @typemap
+def register_native_user_function(op_name, module_name, factory_method_name):
+    '''
+    TBA
+    '''
+    return cntk_py.Function_register_native_user_function(op_name, module_name, factory_method_name)
+
+@typemap
+def native_user_function(op_name, operands, user_function_instance_name=''):
+    '''
+    TBA
+    '''
+    return cntk_py.Function_native_user_function(op_name, operands, user_function_instance_name)
+
+@typemap
 def load_model(filename, device=None):
     '''
     Alias for :func:`~cntk.ops.functions.Function.load`.

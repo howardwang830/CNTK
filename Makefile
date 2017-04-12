@@ -321,6 +321,28 @@ $(PERF_PROFILER_LIB): $(PP_OBJ)
 
 
 ########################################
+# C++ extensibility examples library
+########################################
+
+CPP_EXTENSIBILITY_EXAMPLES_LIBRARY:=Cntk.ExtensibilityExamples-$(CNTK_COMPONENT_VERSION)
+
+CPP_EXTENSIBILITY_EXAMPLES_LIBRARY_SRC =\
+	$(SOURCEDIR)/../Examples/Extensibility/CPP/CPPExtensibilityExamplesLibrary.cpp \
+
+CPP_EXTENSIBILITY_EXAMPLES_LIBRARY_OBJ := $(patsubst %.cpp, $(OBJDIR)/%.o, $(CPP_EXTENSIBILITY_EXAMPLES_LIBRARY_SRC))
+
+CPP_EXTENSIBILITY_EXAMPLES_LIB:= $(LIBDIR)/lib$(CPP_EXTENSIBILITY_EXAMPLES_LIBRARY).so
+ALL_LIBS += $(CPP_EXTENSIBILITY_EXAMPLES_LIB)
+SRC += $(CPP_EXTENSIBILITY_EXAMPLES_LIBRARY_SRC)
+
+$(CPP_EXTENSIBILITY_EXAMPLES_LIB): $(CPP_EXTENSIBILITY_EXAMPLES_LIBRARY_OBJ)
+	@echo $(SEPARATOR)
+	@echo creating $@ for $(ARCH) with build type $(BUILDTYPE)
+	@mkdir -p $(dir $@)
+	$(CXX) $(LDFLAGS) -shared $(patsubst %,$(RPATH)%, $(ORIGINDIR)) -o $@ $^
+
+
+########################################
 # Math library
 ########################################
 
